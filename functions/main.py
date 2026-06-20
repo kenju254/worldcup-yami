@@ -1,5 +1,6 @@
 import os
 import requests
+from datetime import datetime, timedelta
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from flask import Flask, request, jsonify
@@ -27,41 +28,85 @@ HEADERS = {
 WORLD_CUP_LEAGUE_ID = "1" 
 CURRENT_SEASON = "2022"
 
+FINISHED_STATUSES = ["FT", "AET", "PEN"]
+
 @app.route("/schedule", methods=["GET"])
 def get_schedule():
-    # Returns the upcoming matches
+    """Returns today's unplayed matches."""
     if not FOOTBALL_API_KEY:
         return jsonify({"error": "Missing API Key", "matches": []}), 500
         
+    today = datetime.utcnow().strftime("%Y-%m-%d")
     url = f"{FOOTBALL_API_URL}/fixtures"
     params = {
         "league": WORLD_CUP_LEAGUE_ID,
-        "season": CURRENT_SEASON
+        "season": CURRENT_SEASON,
+        "date": today
     }
     try:
         res = requests.get(url, headers=HEADERS, params=params)
         data = res.json()
         matches = []
-        # Free plan doesn't support 'next', so we slice the first 15 fixtures
-        for item in data.get("response", [])[:15]:
-            matches.append({
-                "id": item.get("fixture", {}).get("id"),
-                "home": item.get("teams", {}).get("home", {}).get("name"),
-                "away": item.get("teams", {}).get("away", {}).get("name"),
-                "time": item.get("fixture", {}).get("date"),
-                "group": item.get("league", {}).get("group", "Group Stage")
-            })
+        for item in data.get("response", []):
+            status_short = item.get("fixture", {}).get("status", {}).get("short", "")
+            # Only include matches that haven't finished
+            if status_short not in FINISHED_STATUSES:
+                matches.append({
+                    "id": item.get("fixture", {}).get("id"),
+                    "home": item.get("teams", {}).get("home", {}).get("name"),
+                    "away": item.get("teams", {}).get("away", {}).get("name"),
+                    "homeLogo": item.get("teams", {}).get("home", {}).get("logo"),
+                    "awayLogo": item.get("teams", {}).get("away", {}).get("logo"),
+                    "time": item.get("fixture", {}).get("date"),
+                    "group": item.get("league", {}).get("group", "Group Stage"),
+                    "status": status_short
+                })
         return jsonify({"matches": matches})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/results", methods=["GET"])
 def get_results():
-    # Returns the past matches
+    """Returns yesterday's finished matches."""
     if not FOOTBALL_API_KEY:
-        return jsonify({"error": "Missing API Key", "matches": []}), 500
+        return jsonify({"error": "Missing API Key", "results": []}), 500
         
+    yesterday = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
     url = f"{FOOTBALL_API_URL}/fixtures"
+    params = {
+        "league": WORLD_CUP_LEAGUE_ID,
+        "season": CURRENT_SEASON,
+        "date": yesterday
+    }
+    try:
+        res = requests.get(url, headers=HEADERS, params=params)
+        data = res.json()
+        results = []
+        for item in data.get("response", []):
+            status_short = item.get("fixture", {}).get("status", {}).get("short", "")
+            # Only include completed matches
+            if status_short in FINISHED_STATUSES:
+                results.append({
+                    "id": item.get("fixture", {}).get("id"),
+                    "home": item.get("teams", {}).get("home", {}).get("name"),
+                    "away": item.get("teams", {}).get("away", {}).get("name"),
+                    "homeLogo": item.get("teams", {}).get("home", {}).get("logo"),
+                    "awayLogo": item.get("teams", {}).get("away", {}).get("logo"),
+                    "homeScore": item.get("goals", {}).get("home", 0),
+                    "awayScore": item.get("goals", {}).get("away", 0),
+                    "group": item.get("league", {}).get("group", "Group Stage")
+                })
+        return jsonify({"results": results})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/standings", methods=["GET"])
+def get_standings():
+    """Returns group standings for the World Cup."""
+    if not FOOTBALL_API_KEY:
+        return jsonify({"error": "Missing API Key", "standings": []}), 500
+
+    url = f"{FOOTBALL_API_URL}/standings"
     params = {
         "league": WORLD_CUP_LEAGUE_ID,
         "season": CURRENT_SEASON
@@ -69,27 +114,51 @@ def get_results():
     try:
         res = requests.get(url, headers=HEADERS, params=params)
         data = res.json()
-        results = []
-        # Free plan doesn't support 'last', so we slice the last 15 fixtures
-        for item in data.get("response", [])[-15:]:
-            results.append({
-                "id": item.get("fixture", {}).get("id"),
-                "home": item.get("teams", {}).get("home", {}).get("name"),
-                "away": item.get("teams", {}).get("away", {}).get("name"),
-                "homeScore": item.get("goals", {}).get("home", 0),
-                "awayScore": item.get("goals", {}).get("away", 0)
-            })
-        return jsonify({"results": results})
+        groups = []
+        response_list = data.get("response", [])
+        if response_list:
+            standings_data = response_list[0].get("league", {}).get("standings", [])
+            for group_teams in standings_data:
+                if not group_teams:
+                    continue
+                group_name = group_teams[0].get("group", "Unknown Group")
+                teams = []
+                for team_entry in group_teams:
+                    team_info = team_entry.get("team", {})
+                    all_stats = team_entry.get("all", {})
+                    teams.append({
+                        "name": team_info.get("name"),
+                        "logo": team_info.get("logo", ""),
+                        "points": team_entry.get("points", 0),
+                        "played": all_stats.get("played", 0),
+                        "won": all_stats.get("win", 0),
+                        "drawn": all_stats.get("draw", 0),
+                        "lost": all_stats.get("lose", 0),
+                        "goalDiff": team_entry.get("goalsDiff", 0)
+                    })
+                groups.append({
+                    "group": group_name,
+                    "teams": teams
+                })
+        return jsonify({"standings": groups})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/highlights", methods=["GET"])
 def get_highlights():
-    # Uses YouTube API to search for Fox Sports highlights
+    """Uses YouTube API to search for highlights. Accepts optional 'teams' param for targeted queries."""
     if not YOUTUBE_API_KEY:
         return jsonify({"error": "Missing YouTube API Key", "items": []}), 500
     
-    query = request.args.get("q", "World Cup 2026 highlights Fox Sports")
+    # Check for teams parameter (comma-separated match descriptions)
+    teams_param = request.args.get("teams", "")
+    if teams_param:
+        # Build query from the first match pair
+        match_pairs = teams_param.split(",")
+        query = f"{match_pairs[0].strip()} World Cup 2026 highlights"
+    else:
+        query = request.args.get("q", "World Cup 2026 highlights Fox Sports")
+
     url = "https://www.googleapis.com/youtube/v3/search"
     params = {
         "part": "snippet",
@@ -219,4 +288,3 @@ def api(req: https_fn.Request) -> https_fn.Response:
     
     with app.request_context(environ):
         return app.full_dispatch_request()
-

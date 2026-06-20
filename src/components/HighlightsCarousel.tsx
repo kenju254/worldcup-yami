@@ -12,7 +12,22 @@ export async function HighlightsCarousel() {
   let errorMsg: string | null = null;
 
   try {
-    const data = await fetchSecureApi("/highlights");
+    // First try to get yesterday's results to build targeted queries
+    let teamsParam = "";
+    try {
+      const resultsData = await fetchSecureApi("/results");
+      const results = resultsData.results || [];
+      if (results.length > 0) {
+        teamsParam = results
+          .map((r: { home: string; away: string }) => `${r.home} vs ${r.away}`)
+          .join(",");
+      }
+    } catch {
+      // If results fail, we'll just use default query
+    }
+
+    const queryParam = teamsParam ? `?teams=${encodeURIComponent(teamsParam)}` : "";
+    const data = await fetchSecureApi(`/highlights${queryParam}`);
     videos = data.highlights || [];
   } catch (err) {
     console.error("Failed to fetch highlights", err);
@@ -21,16 +36,24 @@ export async function HighlightsCarousel() {
 
   if (!videos.length && !errorMsg) {
     videos = [
-      { id: "1", title: "Argentina vs Germany Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
-      { id: "2", title: "Spain vs Italy Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
+      { id: "1", title: "Argentina vs Germany - Full Match Highlights", thumbnail: "https://via.placeholder.com/320x180" },
+      { id: "2", title: "Spain vs Italy - All Goals & Highlights", thumbnail: "https://via.placeholder.com/320x180" },
     ];
   }
 
   return (
     <div className="glass-panel" style={{ gridColumn: "1 / -1" }}>
-      <h2 style={{ marginBottom: "1rem" }}>Latest Highlights (Fox Sports)</h2>
+      <div className="section-header">
+        <h2>Yesterday&apos;s Match Highlights</h2>
+      </div>
+
       {errorMsg ? (
         <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
+      ) : videos.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-icon">🎬</div>
+          <p>No highlights available yet</p>
+        </div>
       ) : (
         <div style={{ display: "flex", gap: "16px", overflowX: "auto", paddingBottom: "8px" }}>
           {videos.map((vid: HighlightVideo) => (
