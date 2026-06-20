@@ -1,6 +1,6 @@
 # World Cup 2026 Tracking Application
 
-*Author: Product Manager*
+*Author: Product Manager: Kenneth Kinyanjui*
 
 ## Product Overview
 Welcome to the World Cup 2026 Tracking Application! Our goal was to build the ultimate, real-time companion for football fans globally. We aimed to deliver a product that is not only lightning-fast and reliable during peak match traffic but also visually stunning and deeply personalized.
