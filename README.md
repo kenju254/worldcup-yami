@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Cup 2026 Tracking Application
+
+*Author: Product Manager*
+
+## Product Overview
+Welcome to the World Cup 2026 Tracking Application! Our goal was to build the ultimate, real-time companion for football fans globally. We aimed to deliver a product that is not only lightning-fast and reliable during peak match traffic but also visually stunning and deeply personalized.
+
+## Features
+- 📅 **Daily Schedule**: Real-time updates on upcoming matches.
+- 🏆 **Match Results**: Instant access to final scores and statistics.
+- 📺 **Highlights**: Curated video highlights integrated directly into the dashboard.
+- 🌍 **Team Follower**: Personalized tracking for your favorite nations.
+
+## Product Review & Documentation
+To ensure we met our rigorous standards, this product has been thoroughly reviewed by our engineering and design leadership:
+
+- 🏗️ **[Architecture Review](architecture.md)**: Read our Distinguished Engineer's analysis of our scalable Next.js and Firebase serverless backend.
+- 🎨 **[Design Review](design.md)**: Read our Principal Designer's breakdown of the simple, elegant, and modern UX/UI.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js (v18+)
+- Python (v3.10+)
+- Firebase CLI
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone & Install Frontend:**
+   ```bash
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Setup Backend (Functions):**
+   ```bash
+   cd functions
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Environment Variables:**
+   - Create `.env` in the `functions/` directory with `FOOTBALL_API_KEY` and `YOUTUBE_API_KEY`.
 
-## Learn More
+4. **Run Locally:**
+   - Frontend: `npm run dev`
+   - Backend: `firebase emulators:start` (or run the Flask app locally via python)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Enjoy the beautiful game! ⚽

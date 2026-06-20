@@ -1,29 +1,32 @@
-"use client";
+import { fetchSecureApi } from "@/utils/api";
 
-import { useEffect, useState } from "react";
+export async function MatchResults() {
+  let results: any[] = [];
+  let errorMsg = null;
 
-export function MatchResults() {
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  try {
+    const data = await fetchSecureApi("/results");
+    results = data.results || [];
+  } catch (err) {
+    console.error("Failed to fetch results", err);
+    errorMsg = "Could not load the latest results.";
+  }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setResults([
-        { id: 101, home: "Argentina", away: "Germany", homeScore: 2, awayScore: 1 },
-        { id: 102, home: "Spain", away: "Italy", homeScore: 0, awayScore: 0 },
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  if (!results.length && !errorMsg) {
+    results = [
+      { id: 101, home: "Argentina", away: "Germany", homeScore: 2, awayScore: 1 },
+      { id: 102, home: "Spain", away: "Italy", homeScore: 0, awayScore: 0 },
+    ];
+  }
 
   return (
     <div className="glass-panel">
       <h2 style={{ marginBottom: "1rem" }}>Latest Results</h2>
-      {loading ? (
-        <p style={{ color: "var(--text-muted)" }}>Loading results...</p>
+      {errorMsg ? (
+        <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {results.map((match) => (
+          {results.map((match: any) => (
             <div key={match.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px", background: "rgba(0,0,0,0.05)", borderRadius: "12px" }}>
               <div style={{ fontWeight: 500, flex: 1, textAlign: "right" }}>{match.home}</div>
               <div style={{ margin: "0 16px", fontWeight: 800, fontSize: "1.2rem", color: "var(--primary)" }}>

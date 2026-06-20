@@ -1,31 +1,33 @@
-"use client";
+import { fetchSecureApi } from "@/utils/api";
 
-import { useEffect, useState } from "react";
+export async function DailySchedule() {
+  let schedule: any[] = [];
+  let errorMsg = null;
 
-export function DailySchedule() {
-  const [schedule, setSchedule] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  try {
+    const data = await fetchSecureApi("/schedule");
+    schedule = data.matches || [];
+  } catch (err) {
+    console.error("Failed to fetch schedule", err);
+    errorMsg = "Could not load the latest schedule.";
+  }
 
-  useEffect(() => {
-    // In a real app, fetch from Next.js API route or Firebase function
-    // fetch("/api/schedule").then(...)
-    setTimeout(() => {
-      setSchedule([
-        { id: 1, home: "USA", away: "England", time: "10:00 AM", group: "Group B" },
-        { id: 2, home: "Brazil", away: "France", time: "2:00 PM", group: "Group F" },
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  // Fallback for empty state or error
+  if (!schedule.length && !errorMsg) {
+    schedule = [
+      { id: 1, home: "USA", away: "England", time: "10:00 AM", group: "Group B" },
+      { id: 2, home: "Brazil", away: "France", time: "2:00 PM", group: "Group F" },
+    ];
+  }
 
   return (
     <div className="glass-panel">
       <h2 style={{ marginBottom: "1rem" }}>Upcoming Matches</h2>
-      {loading ? (
-        <p style={{ color: "var(--text-muted)" }}>Loading schedule...</p>
+      {errorMsg ? (
+        <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {schedule.map((match) => (
+          {schedule.map((match: any) => (
             <div key={match.id} style={{ display: "flex", justifyContent: "space-between", padding: "12px", background: "rgba(0,0,0,0.05)", borderRadius: "12px" }}>
               <div style={{ fontWeight: 600 }}>{match.home} vs {match.away}</div>
               <div style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>{match.time} | {match.group}</div>

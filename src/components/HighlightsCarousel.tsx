@@ -1,29 +1,32 @@
-"use client";
+import { fetchSecureApi } from "@/utils/api";
 
-import { useEffect, useState } from "react";
+export async function HighlightsCarousel() {
+  let videos: any[] = [];
+  let errorMsg = null;
 
-export function HighlightsCarousel() {
-  const [videos, setVideos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  try {
+    const data = await fetchSecureApi("/highlights");
+    videos = data.highlights || [];
+  } catch (err) {
+    console.error("Failed to fetch highlights", err);
+    errorMsg = "Could not load the latest highlights.";
+  }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setVideos([
-        { id: "1", title: "Argentina vs Germany Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
-        { id: "2", title: "Spain vs Italy Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
-      ]);
-      setLoading(false);
-    }, 1200);
-  }, []);
+  if (!videos.length && !errorMsg) {
+    videos = [
+      { id: "1", title: "Argentina vs Germany Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
+      { id: "2", title: "Spain vs Italy Highlights - Fox Sports", thumbnail: "https://via.placeholder.com/320x180" },
+    ];
+  }
 
   return (
     <div className="glass-panel" style={{ gridColumn: "1 / -1" }}>
       <h2 style={{ marginBottom: "1rem" }}>Latest Highlights (Fox Sports)</h2>
-      {loading ? (
-        <p style={{ color: "var(--text-muted)" }}>Loading highlights...</p>
+      {errorMsg ? (
+        <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
       ) : (
         <div style={{ display: "flex", gap: "16px", overflowX: "auto", paddingBottom: "8px" }}>
-          {videos.map((vid) => (
+          {videos.map((vid: any) => (
             <div key={vid.id} style={{ minWidth: "300px", borderRadius: "12px", overflow: "hidden", background: "rgba(0,0,0,0.05)", position: "relative", cursor: "pointer" }}>
               <img src={vid.thumbnail} alt={vid.title} style={{ width: "100%", height: "180px", objectFit: "cover" }} />
               <div style={{ padding: "12px", fontWeight: 500, fontSize: "0.9rem" }}>{vid.title}</div>
