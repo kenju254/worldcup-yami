@@ -5,6 +5,7 @@
 ## Product Overview
 Welcome to the World Cup 2026 Tracking Application! Our goal was to build the ultimate, real-time companion for football fans globally. We aimed to deliver a product that is not only lightning-fast and reliable during peak match traffic but also visually stunning and deeply personalized.
 
+🌐 **Live Deployment**: [https://worldcup26-ioextended.web.app](https://worldcup26-ioextended.web.app)
 ## Features
 - 📅 **Daily Schedule**: Real-time updates on upcoming matches.
 - 🏆 **Match Results**: Instant access to final scores and statistics.
