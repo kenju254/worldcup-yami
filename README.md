@@ -10,7 +10,7 @@ Welcome to the World Cup 2026 Tracking Application! Our goal was to build the ul
 - 📅 **Daily Schedule**: Real-time updates on upcoming matches.
 - 🏆 **Match Results**: Instant access to final scores and statistics.
 - 📺 **Highlights**: Curated video highlights integrated directly into the dashboard.
-- 🌍 **Team Follower**: Personalized tracking for your favorite nations.
+- 🌍 **Team Follower**: Personalized tracking for your favorite nations (simply enter the country name, e.g., "USA" or "Argentina").
 
 ## Product Review & Documentation
 To ensure we met our rigorous standards, this product has been thoroughly reviewed by our engineering and design leadership:

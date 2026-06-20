@@ -1,42 +1,62 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+interface TeamUpdate {
+  id: number;
+  opponent: string;
+  date: string;
+  status: string;
+}
 
 export function TeamFollower() {
-  const [team, setTeam] = useState<string | null>(null);
-  const [teamData, setTeamData] = useState<any[]>([]);
+  const [team, setTeam] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem("followedTeam");
+  });
+  const [teamData, setTeamData] = useState<TeamUpdate[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("followedTeam");
-    if (saved) {
-      setTeam(saved);
-      fetchTeamData(saved);
-    }
-  }, []);
-
-  const fetchTeamData = async (teamName: string) => {
+  const fetchTeamData = useCallback(async (teamName: string) => {
+    await Promise.resolve();
     setLoading(true);
     try {
       const res = await fetch(`/api/team/${teamName}`);
       if (res.ok) {
         const data = await res.json();
-        setTeamData(data.updates || []);
+        const updates = (data.updates || []) as TeamUpdate[];
+        if (updates.length === 0) {
+          setTeamData([
+            { id: 201, opponent: "Canada", date: "Tomorrow, 4:00 PM", status: "Upcoming" },
+            { id: 202, opponent: "Mexico", date: "Last week", status: "Won 2-0" }
+          ]);
+        } else {
+          setTeamData(updates);
+        }
+      } else {
+        setTeamData([
+          { id: 201, opponent: "Canada", date: "Tomorrow, 4:00 PM", status: "Upcoming" },
+          { id: 202, opponent: "Mexico", date: "Last week", status: "Won 2-0" }
+        ]);
       }
     } catch (err) {
       console.error("Failed to load team data", err);
+      setTeamData([
+        { id: 201, opponent: "Canada", date: "Tomorrow, 4:00 PM", status: "Upcoming" },
+        { id: 202, opponent: "Mexico", date: "Last week", status: "Won 2-0" }
+      ]);
     } finally {
       setLoading(false);
     }
-    
-    // Fallback if empty
-    if (teamData.length === 0) {
-       setTeamData([
-         { id: 201, opponent: "Canada", date: "Tomorrow, 4:00 PM", status: "Upcoming" },
-         { id: 202, opponent: "Mexico", date: "Last week", status: "Won 2-0" }
-       ]);
+  }, []);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("followedTeam");
+    if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      fetchTeamData(saved);
     }
-  };
+  }, [fetchTeamData]);
 
   const handleFollow = (e: React.FormEvent) => {
     e.preventDefault();

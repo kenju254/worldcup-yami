@@ -1,8 +1,16 @@
 import { fetchSecureApi } from "@/utils/api";
 
+interface Match {
+  id: number;
+  home: string;
+  away: string;
+  time: string;
+  group: string;
+}
+
 export async function DailySchedule() {
-  let schedule: any[] = [];
-  let errorMsg = null;
+  let schedule: Match[] = [];
+  let errorMsg: string | null = null;
 
   try {
     const data = await fetchSecureApi("/schedule");
@@ -27,7 +35,7 @@ export async function DailySchedule() {
         <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {schedule.map((match: any) => (
+          {schedule.map((match: Match) => (
             <div key={match.id} style={{ display: "flex", justifyContent: "space-between", padding: "12px", background: "rgba(0,0,0,0.05)", borderRadius: "12px" }}>
               <div style={{ fontWeight: 600 }}>{match.home} vs {match.away}</div>
               <div style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>{match.time} | {match.group}</div>

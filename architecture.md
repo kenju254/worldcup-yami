@@ -20,7 +20,7 @@ The World Cup 2026 Tracking Application adopts a modern, highly secure **Zero Tr
   - `/schedule`: Fetches upcoming fixtures.
   - `/results`: Fetches recently completed fixtures.
   - `/highlights`: Interfaces with YouTube API for curated match highlights.
-  - `/team/<team_id>`: Retrieves team-specific telemetry and fixtures.
+  - `/team/<team_id>`: Retrieves team-specific telemetry and fixtures. Automatically resolves team names (e.g., "USA") to numeric IDs via the `/teams` endpoint, and formats the fixtures into the updates format expected by the frontend.
 
 ### 3. External Integrations
 - **API-Sports (Football)**: Serves as the primary source of truth for real-time match data, schedules, and scores.

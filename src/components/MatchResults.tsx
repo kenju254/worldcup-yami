@@ -1,8 +1,16 @@
 import { fetchSecureApi } from "@/utils/api";
 
+interface MatchResult {
+  id: number;
+  home: string;
+  away: string;
+  homeScore: number;
+  awayScore: number;
+}
+
 export async function MatchResults() {
-  let results: any[] = [];
-  let errorMsg = null;
+  let results: MatchResult[] = [];
+  let errorMsg: string | null = null;
 
   try {
     const data = await fetchSecureApi("/results");
@@ -26,7 +34,7 @@ export async function MatchResults() {
         <p style={{ color: "var(--danger-color, red)" }}>{errorMsg}</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {results.map((match: any) => (
+          {results.map((match: MatchResult) => (
             <div key={match.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px", background: "rgba(0,0,0,0.05)", borderRadius: "12px" }}>
               <div style={{ fontWeight: 500, flex: 1, textAlign: "right" }}>{match.home}</div>
               <div style={{ margin: "0 16px", fontWeight: 800, fontSize: "1.2rem", color: "var(--primary)" }}>

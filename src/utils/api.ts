@@ -29,7 +29,7 @@ async function getIdToken(): Promise<string | null> {
 
 export async function fetchSecureApi(endpoint: string, options: RequestInit = {}) {
   const url = `${BASE_URL}${endpoint}`;
-  let headers: Record<string, string> = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {})
   };

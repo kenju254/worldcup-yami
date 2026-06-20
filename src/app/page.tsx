@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import { Header } from "@/components/Header";
 import { DailySchedule } from "@/components/DailySchedule";
 import { MatchResults } from "@/components/MatchResults";
 import { HighlightsCarousel } from "@/components/HighlightsCarousel";
 import { TeamFollower } from "@/components/TeamFollower";
+
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
@@ -15,15 +18,21 @@ export default function Home() {
         gap: "24px",
       }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          <DailySchedule />
+          <Suspense fallback={<div className="glass-panel">Loading schedule...</div>}>
+            <DailySchedule />
+          </Suspense>
           <TeamFollower />
         </div>
         
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          <MatchResults />
+          <Suspense fallback={<div className="glass-panel">Loading results...</div>}>
+            <MatchResults />
+          </Suspense>
         </div>
 
-        <HighlightsCarousel />
+        <Suspense fallback={<div className="glass-panel" style={{ gridColumn: "1 / -1" }}>Loading highlights...</div>}>
+          <HighlightsCarousel />
+        </Suspense>
       </main>
 
       <footer style={{ marginTop: "4rem", textAlign: "center", color: "var(--text-muted)", padding: "2rem 0", borderTop: "1px solid var(--card-border)" }}>
