@@ -14,6 +14,7 @@ Our mission is to build the **definitive real-time companion** for the 2026 FIFA
 *   **Engagement**: Curated video highlights integrated to increase time-on-page by 25%.
 
 🌐 **Live Deployment**: [https://worldcup26-ioextended.web.app](https://worldcup26-ioextended.web.app)
+📚 **Documentation**: [https://kenju254.github.io/worldcup-yami/](https://kenju254.github.io/worldcup-yami/)
 
 ---
 
