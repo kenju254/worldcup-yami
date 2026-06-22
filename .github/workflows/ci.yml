@@ -45,11 +45,9 @@ jobs:
         run: |
           cd functions
           python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt -r requirements-dev.txt
+          venv/bin/python -m pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Run tests with pytest
         run: |
           cd functions
-          source venv/bin/activate
-          pytest --cov=. --cov-report=xml
+          venv/bin/pytest --cov=. --cov-report=xml
