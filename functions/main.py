@@ -1,17 +1,24 @@
 import os
 import requests
+import re
 from datetime import datetime, timedelta
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+from cachetools import TTLCache
 
 load_dotenv()
 
 initialize_app()
 app = Flask(__name__)
-CORS(app)
+
+# Restrict CORS to production domain, allow all in development
+if os.getenv("FLASK_ENV") == "development" or os.getenv("FUNCTIONS_EMULATOR") == "true":
+    CORS(app)
+else:
+    CORS(app, origins=["https://worldcup26-ioextended.web.app"])
 
 FOOTBALL_API_KEY = os.getenv("FOOTBALL_API_KEY", "")
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY", "")
@@ -23,12 +30,18 @@ HEADERS = {
 }
 
 # The World Cup 2026 League ID in API-Football. 
-# (You might need to query the leagues endpoint to find the exact ID for 2026, 
-# typically it's 1 for World Cup, but seasons change).
 WORLD_CUP_LEAGUE_ID = "1" 
-CURRENT_SEASON = "2022"
+CURRENT_SEASON = os.getenv("CURRENT_SEASON", "2022")
 
 FINISHED_STATUSES = ["FT", "AET", "PEN"]
+
+# In-memory TTL caches
+schedule_cache = TTLCache(maxsize=1, ttl=60)      # 1 minute cache for schedule
+results_cache = TTLCache(maxsize=1, ttl=300)      # 5 minutes cache for results
+standings_cache = TTLCache(maxsize=1, ttl=300)    # 5 minutes cache for standings
+highlights_cache = TTLCache(maxsize=50, ttl=600)  # 10 minutes cache for highlights query
+team_cache = TTLCache(maxsize=100, ttl=120)       # 2 minutes cache for team specific updates
+
 
 @app.route("/schedule", methods=["GET"])
 def get_schedule():
@@ -36,6 +49,10 @@ def get_schedule():
     if not FOOTBALL_API_KEY:
         return jsonify({"error": "Missing API Key", "matches": []}), 500
         
+    cache_key = "schedule"
+    if cache_key in schedule_cache:
+        return jsonify(schedule_cache[cache_key])
+
     today = datetime.utcnow().strftime("%Y-%m-%d")
     url = f"{FOOTBALL_API_URL}/fixtures"
     params = {
@@ -61,7 +78,10 @@ def get_schedule():
                     "group": item.get("league", {}).get("group", "Group Stage"),
                     "status": status_short
                 })
-        return jsonify({"matches": matches})
+        
+        response_data = {"matches": matches}
+        schedule_cache[cache_key] = response_data
+        return jsonify(response_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -71,6 +91,10 @@ def get_results():
     if not FOOTBALL_API_KEY:
         return jsonify({"error": "Missing API Key", "results": []}), 500
         
+    cache_key = "results"
+    if cache_key in results_cache:
+        return jsonify(results_cache[cache_key])
+
     yesterday = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
     url = f"{FOOTBALL_API_URL}/fixtures"
     params = {
@@ -96,7 +120,10 @@ def get_results():
                     "awayScore": item.get("goals", {}).get("away", 0),
                     "group": item.get("league", {}).get("group", "Group Stage")
                 })
-        return jsonify({"results": results})
+        
+        response_data = {"results": results}
+        results_cache[cache_key] = response_data
+        return jsonify(response_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -105,6 +132,10 @@ def get_standings():
     """Returns group standings for the World Cup."""
     if not FOOTBALL_API_KEY:
         return jsonify({"error": "Missing API Key", "standings": []}), 500
+
+    cache_key = "standings"
+    if cache_key in standings_cache:
+        return jsonify(standings_cache[cache_key])
 
     url = f"{FOOTBALL_API_URL}/standings"
     params = {
@@ -140,7 +171,10 @@ def get_standings():
                     "group": group_name,
                     "teams": teams
                 })
-        return jsonify({"standings": groups})
+        
+        response_data = {"standings": groups}
+        standings_cache[cache_key] = response_data
+        return jsonify(response_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -158,6 +192,10 @@ def get_highlights():
         query = f"{match_pairs[0].strip()} World Cup 2026 highlights"
     else:
         query = request.args.get("q", "World Cup 2026 highlights Fox Sports")
+
+    cache_key = f"{teams_param}:{query}"
+    if cache_key in highlights_cache:
+        return jsonify(highlights_cache[cache_key])
 
     url = "https://www.googleapis.com/youtube/v3/search"
     params = {
@@ -179,7 +217,10 @@ def get_highlights():
                     "title": item.get("snippet", {}).get("title"),
                     "thumbnail": item.get("snippet", {}).get("thumbnails", {}).get("medium", {}).get("url")
                 })
-        return jsonify({"highlights": videos})
+        
+        response_data = {"highlights": videos}
+        highlights_cache[cache_key] = response_data
+        return jsonify(response_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -187,6 +228,15 @@ def get_highlights():
 def get_team_updates(team_id):
     if not FOOTBALL_API_KEY:
         return jsonify({"error": "Missing API Key", "updates": []}), 500
+
+    # Input Validation: Allow only alphanumeric characters, spaces, and hyphens, max 50 chars
+    if not team_id or len(team_id) > 50 or not re.match(r"^[a-zA-Z0-9\s\-]+$", team_id):
+        return jsonify({"error": "Invalid team ID or name format", "updates": []}), 400
+
+    # Check cache
+    cache_key = team_id
+    if cache_key in team_cache:
+        return jsonify(team_cache[cache_key])
         
     # Check if team_id is numeric
     resolved_team_id = team_id
@@ -273,7 +323,10 @@ def get_team_updates(team_id):
                 "date": date_str,
                 "status": status_str
             })
-        return jsonify({"updates": updates})
+            
+        response_data = {"updates": updates}
+        team_cache[cache_key] = response_data
+        return jsonify(response_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
