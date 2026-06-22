@@ -1,0 +1,843 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+        <link rel="next" href="architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>World Cup 2026 Tracking Application</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#world-cup-2026-tracking-application" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="World Cup 2026 Tracking Application" class="md-header__button md-logo" aria-label="World Cup 2026 Tracking Application" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            World Cup 2026 Tracking Application
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="design/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="World Cup 2026 Tracking Application" class="md-nav__button md-logo" aria-label="World Cup 2026 Tracking Application" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    World Cup 2026 Tracking Application
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#product-vision-mission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Product Vision &amp; Mission
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Product Vision &amp; Mission">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-success-metrics-kpis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 Core Success Metrics (KPIs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✨ Key Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏗️ Architecture at a Glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-project-setup-frontend-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Project Setup &amp; Frontend Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-backend-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Backend Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Environment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-running-the-application-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Running the Application Locally
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📁 Project Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#product-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗺️ Product Roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤝 Contributing Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📄 License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="world-cup-2026-tracking-application">🏆 World Cup 2026 Tracking Application</h1>
+<p><em>Author: Kenneth Kinyanjui (Product Manager)</em></p>
+<hr />
+<h2 id="product-vision-mission">🎯 Product Vision &amp; Mission</h2>
+<p>Our mission is to build the <strong>definitive real-time companion</strong> for the 2026 FIFA World Cup, delivering sub-second match updates, personalized team tracking, and curated media highlights to millions of fans globally. By combining a zero-trust architecture with a blazing-fast user interface, we ensure that fans stay closer to the action than ever before—reliably, securely, and beautifully.</p>
+<h3 id="core-success-metrics-kpis">📈 Core Success Metrics (KPIs)</h3>
+<ul>
+<li><strong>Performance</strong>: Under-2-second Initial Page Load (LCP) even under peak load.</li>
+<li><strong>Reliability</strong>: 99.99% uptime during active tournament hours.</li>
+<li><strong>Latency</strong>: Backend p95 latency under 500ms.</li>
+<li><strong>Engagement</strong>: Curated video highlights integrated to increase time-on-page by 25%.</li>
+</ul>
+<p>🌐 <strong>Live Deployment</strong>: <a href="https://worldcup26-ioextended.web.app">https://worldcup26-ioextended.web.app</a>
+📚 <strong>Documentation</strong>: <a href="https://kenju254.github.io/worldcup-yami/">https://kenju254.github.io/worldcup-yami/</a></p>
+<hr />
+<h2 id="key-features">✨ Key Features</h2>
+<ul>
+<li>📅 <strong>Daily Schedule</strong>: Real-time updates on upcoming matches, group alignments, and kick-off countdowns.</li>
+<li>🏆 <strong>Match Results</strong>: Instant access to final scores, goal scorers, and head-to-head metrics.</li>
+<li>🌍 <strong>Team Follower</strong>: Personalized tracking for favorite nations. Enter your country (e.g., "USA" or "Argentina") to pin their specific telemetry and upcoming matches to your dashboard.</li>
+<li>📺 <strong>Highlights Carousel</strong>: Curated video highlights sourced directly via YouTube API to rewatch defining tournament moments.</li>
+<li>🌓 <strong>Dynamic Theming</strong>: Smooth transitions between Light and Dark mode options matching user preferences.</li>
+</ul>
+<hr />
+<h2 id="architecture-at-a-glance">🏗️ Architecture at a Glance</h2>
+<p>The application is architected around a secure, serverless <strong>Zero Trust model</strong> to prevent API key leakage and scrape attacks.</p>
+<pre><code class="language-mermaid">graph TD
+    User([User Browser]) --&gt;|HTTPS| FH[Firebase Hosting]
+    FH --&gt;|Next.js Server Side Rendering| Next[Next.js App Server]
+
+    subgraph Secure Cloud VPC
+        Next --&gt;|Internal OIDC Request / OIDC identity token| Proxy[OIDC Identity Proxy]
+        Proxy --&gt;|Authorized HTTPS| Functions[Firebase Functions / Cloud Run - Python Flask]
+    end
+
+    subgraph External Data Layer
+        Functions --&gt;|API Key Auth| APISports[API-Sports Football API]
+        Functions --&gt;|API Key Auth| YouTube[YouTube Data API v3]
+    end
+</code></pre>
+<hr />
+<h2 id="tech-stack">🛠️ Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">Technology</th>
+<th style="text-align: left;">Reason for Selection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Frontend Framework</strong></td>
+<td style="text-align: left;">Next.js 16 (React 19)</td>
+<td style="text-align: left;">Server components enable fast server-side rendering and keep secrets out of client bundle.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Styling</strong></td>
+<td style="text-align: left;">Vanilla CSS (Modern CSS Custom Props)</td>
+<td style="text-align: left;">Total control over typography, layouts, and fast execution without framework build overhead.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Backend Gateway</strong></td>
+<td style="text-align: left;">Flask (Python 3.10)</td>
+<td style="text-align: left;">Lightweight, easy to route, standard for quick microservices.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Serverless Runtime</strong></td>
+<td style="text-align: left;">Firebase Cloud Functions (Gen 2 / Cloud Run)</td>
+<td style="text-align: left;">Scalable backend execution with auto-scaling to zero to save budget, and scales up to 10 instances to handle match peaks.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Security Layer</strong></td>
+<td style="text-align: left;">Google Auth Library (OIDC Token)</td>
+<td style="text-align: left;">Restricts backend functions only to authenticated frontend requests, preventing public scraping and billing exploitation.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="getting-started">🚀 Getting Started</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><strong>Node.js</strong>: v18.0.0 or higher</li>
+<li><strong>Python</strong>: v3.10.0 or higher</li>
+<li><strong>Firebase CLI</strong>: Globally installed (<code>npm install -g firebase-tools</code>)</li>
+</ul>
+<h3 id="1-project-setup-frontend-installation">1. Project Setup &amp; Frontend Installation</h3>
+<p>Clone the repository and install dependencies:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+<h3 id="2-backend-setup">2. Backend Setup</h3>
+<p>Navigate to the <code>functions</code> directory and set up a Python virtual environment:</p>
+<pre><code class="language-bash">cd functions
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+</code></pre>
+<h3 id="3-environment-configuration">3. Environment Configuration</h3>
+<p>Create environment files using the templates provided:</p>
+<pre><code class="language-bash"># In the functions/ directory, create a .env file:
+cp .env.example .env
+
+# Configure the credentials in functions/.env:
+# FOOTBALL_API_KEY=your_key
+# YOUTUBE_API_KEY=your_key
+# CURRENT_SEASON=2022
+</code></pre>
+<h3 id="4-running-the-application-locally">4. Running the Application Locally</h3>
+<p>To start the developer environment:</p>
+<ul>
+<li>
+<p><strong>Frontend Server</strong>:
+    <code>bash
+    npm run dev</code>
+    The application will be available at <a href="http://localhost:3000">http://localhost:3000</a>.</p>
+</li>
+<li>
+<p><strong>Backend Emulators / Server</strong>:
+    You can run Firebase emulators to test functions:
+    <code>bash
+    firebase emulators:start</code>
+    Or run Flask locally directly for rapid development:
+    <code>bash
+    source functions/venv/bin/activate
+    python functions/main.py</code></p>
+</li>
+</ul>
+<hr />
+<h2 id="project-structure">📁 Project Structure</h2>
+<pre><code>worldcup-yami/
+├── .github/workflows/       # CI/CD pipelines (CI validation &amp; CD Auto-deploy)
+├── .husky/                  # Git hooks (pre-commit lint, pre-push test runner)
+├── functions/               # Backend Python/Flask Microservice (Firebase Functions)
+│   ├── .env.example         # Example backend secrets
+│   ├── main.py              # Main Flask application entrypoint &amp; API endpoints
+│   ├── requirements.txt     # Python production dependencies
+│   └── requirements-dev.txt # Python developer &amp; testing packages
+├── public/                  # Static assets and icons
+├── src/
+│   ├── app/                 # Next.js App Router pages, layouts, and API proxy routes
+│   │   ├── layout.tsx       # Global root HTML wrapper
+│   │   ├── page.tsx         # Dashboard landing page container
+│   │   └── api/team/[id]/   # Client-to-Backend Next.js authentication proxy
+│   ├── components/          # Reusable React components (Schedule, Results, Carousel)
+│   │   └── ThemeProvider.tsx# Client theme switching context
+│   └── utils/
+│       └── api.ts           # Compute-aware OIDC fetching helper
+├── firebase.json            # Firebase configuration rules
+└── package.json             # Frontend project manifest
+</code></pre>
+<hr />
+<h2 id="product-roadmap">🗺️ Product Roadmap</h2>
+<ul>
+<li><strong>v1.0 (Current)</strong>: Live match dashboard, daily schedules, team follower, video highlights, and theme selection.</li>
+<li><strong>v1.1 (Targeted)</strong>: Full CI/CD integration, automated test suites (Jest/Pytest), input sanitization, and response caching.</li>
+<li><strong>v1.2 (Planned)</strong>: Live match countdown timers, match event timeline logs, and accessible navigation.</li>
+<li><strong>v2.0 (Future)</strong>: Real-time web sockets for goal notifications, user accounts with cross-device favorited teams, and multi-language support (English, Spanish, French).</li>
+</ul>
+<hr />
+<h2 id="contributing-guidelines">🤝 Contributing Guidelines</h2>
+<p>We welcome contributions to make this project the best it can be!
+1.  <strong>Fork</strong> the repository and create a new feature branch (<code>git checkout -b feature/amazing-feature</code>).
+2.  Ensure your code passes all lint checks (<code>npm run lint</code>) and python lint (<code>flake8</code>).
+3.  Write tests for any new features or bug fixes.
+4.  Commit your changes following conventional commits standards.
+5.  Push to your branch and submit a Pull Request to the <code>main</code> branch.</p>
+<hr />
+<h2 id="license">📄 License</h2>
+<p>This project is licensed under the MIT License. See <code>LICENSE</code> for details.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "toc.integrate"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
