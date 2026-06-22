@@ -30,6 +30,8 @@ jobs:
       - name: Install Backend Dependencies
         run: |
           cd functions
+          python -m venv venv
+          source venv/bin/activate
           pip install -r requirements.txt
 
       - name: Install Firebase CLI
