@@ -1,10 +1,14 @@
 import { GoogleAuth } from 'google-auth-library';
 
 // The URL of the Cloud Run function acting as the target audience for OIDC
-const TARGET_AUDIENCE = 'https://api-jwiz3cw7wq-uc.a.run.app';
-const BASE_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://127.0.0.1:5001/worldcup26-ioextended/us-central1/api'
-  : TARGET_AUDIENCE;
+const getTargetAudience = () => process.env.TARGET_AUDIENCE || 'https://api-jwiz3cw7wq-uc.a.run.app';
+
+const getBaseUrl = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://127.0.0.1:5001/worldcup26-ioextended/us-central1/api';
+  }
+  return getTargetAudience();
+};
 
 let auth: GoogleAuth | null = null;
 
@@ -17,9 +21,10 @@ async function getIdToken(): Promise<string | null> {
   }
   
   try {
-    const client = await auth.getIdTokenClient(TARGET_AUDIENCE);
+    const audience = getTargetAudience();
+    const client = await auth.getIdTokenClient(audience);
     // client.idTokenProvider is an internal mechanism, a cleaner way is:
-    const token = await client.idTokenProvider.fetchIdToken(TARGET_AUDIENCE);
+    const token = await client.idTokenProvider.fetchIdToken(audience);
     return token;
   } catch (error) {
     console.error("Error fetching ID token for service-to-service auth:", error);
@@ -28,7 +33,7 @@ async function getIdToken(): Promise<string | null> {
 }
 
 export async function fetchSecureApi(endpoint: string, options: RequestInit = {}) {
-  const url = `${BASE_URL}${endpoint}`;
+  const url = `${getBaseUrl()}${endpoint}`;
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {})
