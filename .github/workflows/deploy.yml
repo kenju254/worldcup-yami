@@ -41,4 +41,5 @@ jobs:
           # Alternatively, Google application credentials
           # GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
+          firebase experiments:enable webframeworks
           firebase deploy --only hosting,functions --non-interactive --token "$FIREBASE_TOKEN"
